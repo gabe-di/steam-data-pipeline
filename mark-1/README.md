@@ -113,11 +113,9 @@ The row-count comparison currently serves as a reporting check rather than an en
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/gabe-di/steam-data-pipeline.git
 cd steam-data-pipeline/mark-1
 ```
-
-Replace `<repository-url>` with the GitHub repository URL.
 
 ### 2. Install Python Dependencies
 
