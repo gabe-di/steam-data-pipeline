@@ -49,6 +49,7 @@ steam-data-pipeline/
 │   ├── load.py
 │   └── run_pipeline.py
 ├── sql/
+│   ├── analyze_games.sql   
 │   ├── create_tables.sql
 │   ├── create_views.sql
 │   └── validate_data.sql
@@ -73,6 +74,8 @@ steam-data-pipeline/
 - **`sql/create_views.sql`** — Creates a SQL view that transforms game prices from integer cents into dollar amounts, making the data easier to query and analyze.
 
 - **`sql/validate_data.sql`** — Runs data quality checks for negative prices, invalid discount percentages, missing required values, and consistency between the source table and transformation view. Raises exceptions for invalid prices, discounts, and missing required values.
+
+- **`sql/analyze_games.sql — Analyzes discounted games by calculating positive review percentages, filtering by minimum review counts, and ranking eligible games.
 
 ### Additional Files
 
@@ -161,6 +164,42 @@ python src/run_pipeline.py
 This runs extraction, loading, SQL transformations, and validation in sequence.
 
 The pipeline retrieves up to 100 games from SteamSpy's top-games endpoint and inserts or updates their records in PostgreSQL.
+
+## Analytical Findings
+
+### Research Question
+
+Which discounted games have the highest positive review percentages among games with at least 1,000 reviews?
+
+### Methodology
+
+Using PostgreSQL, the analysis calculates each game's positive review percentage by dividing positive reviews by the total number of positive and negative reviews.
+
+Games must have at least 1,000 total reviews and a discount greater than 0% to qualify. Eligible games are ranked by positive review percentage, with total review count used as a secondary sorting criterion.
+
+The analysis is implemented in `sql/analyze_games.sql`.
+
+### Findings
+
+Of the 100 games collected from SteamSpy, nine met the analysis criteria.
+
+Portal ranked first with a 98.47% positive review percentage, an 80% discount, and a price of $1.99. Stardew Valley (98.44%) and Schedule I (98.41%) followed closely.
+
+All nine qualifying games had positive review percentages above 96%, suggesting that the discounted games in this particular sample were generally well reviewed.
+
+Portal and Counter-Strike shared the highest discount percentage at 80%.
+
+### Limitations
+
+The dataset comes from SteamSpy's top-games endpoint rather than the entire Steam catalog. Therefore, these results should not be generalized to all Steam games.
+
+The analysis uses review counts supplied by SteamSpy, which may differ from the review scores displayed on Steam.
+
+Prices and discounts reflect the API data at the time of extraction and may change.
+
+The analysis ranks games by positive review percentage rather than combining review quality and discount size into a single value metric.
+
+
 
 ## Future Improvements
 
