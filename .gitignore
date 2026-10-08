@@ -1,0 +1,16 @@
+#Python virtual environment
+.venv/
+
+#Python cache files
+__pycache__/
+
+*.pyc
+
+#Environment variables and secrets
+.env
+
+#Generated datasets
+**/data/*.json
+
+#macOS files
+.DS_Store

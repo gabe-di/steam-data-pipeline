@@ -1,0 +1,2 @@
+requests==2.34.2 #handles HTTP requests to the SteamSpy API
+psycopg[binary]==3.3.6 #allows Python to connect to PostgreSQL. The [binary] extra installs the binary package alongside Psycopg
