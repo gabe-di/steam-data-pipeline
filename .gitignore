@@ -1,16 +1,22 @@
-#Python virtual environment
+
+# Python virtual environments
 .venv/
+venv/
 
-#Python cache files
+# Python cache files
 __pycache__/
-
 *.pyc
 
-#Environment variables and secrets
+# Environment variables and credentials
 .env
+.env.*
 
-#Generated datasets
-**/data/*.json
-
-#macOS files
+# macOS files
 .DS_Store
+
+# Editor settings
+.vscode/
+
+# Generated pipeline data
+mark-1/data/games.json
+mark-2/data/games.json
