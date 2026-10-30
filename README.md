@@ -2,45 +2,86 @@
 
 A multi-version data engineering project built using Python, PostgreSQL, and SQL.
 
-The project explores the development of a data pipeline that extracts video game data from the SteamSpy API, processes and stores it in PostgreSQL, and makes it available for querying and analysis.
+This project extracts video game data from the SteamSpy API, transforms it into structured datasets, and loads it into PostgreSQL for storage and analysis.
 
-Each version, referred to as a **Mark**, builds on the previous implementation by introducing new functionality and data engineering concepts.
+The project is organized into two versions, called *Marks*, demonstrating the progression from a foundational ETL pipeline to a historical data pipeline with automated validation and analytical SQL queries.
 
 ## Project Versions
 
-### Mark 1 — Foundational ETL Pipeline
+### Mark II — Historical Data Pipeline (Current)
 
-**Status:** Completed
+**Status: Completed**
 
-The first implementation establishes the foundation of the pipeline, including:
+Mark II expands the original pipeline with:
 
-- API extraction using Python and Requests
-- JSON staging and data processing
+- Historical data collection using timestamped snapshots
+- A relational PostgreSQL schema separating game metadata from collected metrics
+- Idempotent loading and transaction-level validation
+- Automated database integrity checks
+- SQL analysis using window functions and CTEs
+- Configurable PostgreSQL connections
+- Reproducible setup and execution instructions
+
+The pipeline collects data for 100 popular Steam games and preserves observations across multiple executions, allowing comparisons of reported player counts and prices over time.
+
+**[Explore Mark II — Code, Architecture, and Setup](mark-2/README.md)**
+
+### Mark I — Foundational ETL Pipeline
+
+**Status: Completed**
+
+Mark I established the initial extraction, transformation, and loading workflow.
+
+Features include:
+
+- SteamSpy API extraction using Python
+- JSON staging and transformation
 - PostgreSQL loading with UPSERT operations
-- SQL transformations using database views
-- Transaction-level validation and rollback
-- Post-load SQL data quality checks
+- SQL views and data validation
 - Single-command pipeline execution
 
-**[View Mark 1](mark-1/README.md)**
+**[Explore Mark I](mark-1/README.md)**
 
-## Planned Improvements
+## Pipeline Architecture
 
-Future versions may explore:
+```text
+SteamSpy API
+     |
+     v
+Python Extraction
+     |
+     v
+JSON Staging
+     |
+     v
+PostgreSQL
+  |       |
+  v       v
+games   game_snapshots
+     |
+     v
+Data Validation
+     |
+     v
+Historical SQL Analysis
+```
 
-- Historical data collection and tracking
-- More advanced SQL transformations and analytics
-- Database normalization
-- Automated pipeline scheduling
-- Improved logging and error handling
-
-Each Mark will have its own implementation and documentation to demonstrate how the project evolves over time.
+*Architecture shown for Mark II.*
 
 ## Technologies
 
-- Python
-- PostgreSQL
-- SQL
-- Requests
-- Psycopg
-- SteamSpy API
+- **Programming:** Python, SQL
+- **Database:** PostgreSQL
+- **Libraries:** Requests, Psycopg
+- **Data source:** SteamSpy API
+- **Version control:** Git and GitHub
+
+## Future Improvements
+
+Potential future enhancements include automated scheduling, improved logging and error handling, additional tests, and data visualizations.
+
+## Getting Started
+
+**Mark II is the recommended version for exploring this project.**
+
+See the [Mark II README](mark-2/README.md) for installation instructions, database setup, pipeline execution, and SQL analysis.
